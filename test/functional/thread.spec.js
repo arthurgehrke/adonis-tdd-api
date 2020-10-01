@@ -19,10 +19,16 @@ test("Should create a thread if correct data is provided", async ({
   response.assertStatus(200);
 });
 
-test("should delete a thread", async ({ assert, client }) => {
+test("Should delete a thread", async ({ assert, client }) => {
   const thread = await await Factory.model("App/Models/Thread").create();
 
   const response = await client.delete(`threads/${thread.id}`).send().end();
-  console.log(response);
+
   response.assertStatus(204);
+});
+
+test("Should have url property", async ({ assert }) => {
+  const thread = await Factory.model("App/Models/Thread").create();
+
+  assert.equal(thread.url(), `threads/${thread.id}`);
 });
